@@ -1,0 +1,28 @@
+.body-timer {
+    background-color:rgb(43, 4, 80);   
+}
+
+
+
+.timer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  display: flex;
+  background-color: #ee8787; 
+  color: #212121;
+  font-size: 50px;
+  border: 5px solid rgb(43, 4, 80);
+  padding: 20px;
+}
+
+.value, .label {
+    display: flex;
+    justify-content: center; 
+}
+
+.label {
+    justify-content: space-between;
+
+}
