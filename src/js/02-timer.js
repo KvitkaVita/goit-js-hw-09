@@ -4,9 +4,9 @@ import 'flatpickr/dist/flatpickr.min.css';
 const startBtn = document.querySelector('button[data-start]');
 const selector = document.querySelector('#datetime-picker');
 
-selector.addEventListener('click', flatpicker);
+selector.addEventListener('click', flatpickr);
 startBtn.addEventListener('click', convertMs);
-function flatpicker(selector, options) {}
+
 
 const options = {
   enableTime: true,
@@ -22,6 +22,8 @@ const options = {
     } else {
       startBtn.disabled = false;
       startBtn.addEventListener('click', dataTimer(selectedDates[0]));
+
+      flatpickr("#datetime-picker", options) 
 
       function dataTimer(evt) {
         let timerId = null;
