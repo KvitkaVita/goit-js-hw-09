@@ -1,11 +1,21 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 
-const startBtn = document.querySelector('button[data-start]');
-const selector = document.querySelector('#datetime-picker');
+const refs = {
+  input: document.querySelector('#datetime-picker'),
+  startBtn: document.querySelector('button[data-start]'),
+  startDays: document.querySelector('span[data-days]'),
+  startHours: document.querySelector('span[data-hours]'),
+  startMinutes: document.querySelector('span[data-minutes]'),
+  startSeconds: document.querySelector('span[data-seconds]'),
+  };
 
-selector.addEventListener('click', flatpickr);
-startBtn.addEventListener('click', convertMs);
+  function startWithZero(value) {
+      return String(value).padStart(2, '0');
+    }
+
+    refs.startBtn.disabled = true;
+
 
 
 const options = {
@@ -13,69 +23,51 @@ const options = {
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
+
   onClose(selectedDates) {
     console.log(selectedDates[0]);
     if (selectedDates[0] - new Date() < 0) {
-      // alert('Please choose a date in the future');
-      Notiflix.Notify.failure('Please choose a date in the future');
-      startBtn.disabled = true;
+      alert('Please choose a date in the future');
+
     } else {
-      startBtn.disabled = false;
-      startBtn.addEventListener('click', dataTimer(selectedDates[0]));
+      refs.startBtn.disabled = false;
+      refs.startBtn.addEventListener('click', () => 
 
-      flatpickr("#datetime-picker", options) 
-
-      function dataTimer(evt) {
-        let timerId = null;
-        timerId = setInterval(() => {
-          let diff = evt - new Date();
-          let countTime = convertMs(diff);
-
-          dataDay.textContext = countTime.days;
-          dataHours.textContext = countTime.hours;
-          dataMinutes.textContext = countTime.Minutes;
-          dataSeconds.textContext = countTime.seconds;
-        }, 1000);
-      }
-    }
-  },
-};
+       setInterval(() => {
+          const currentTime = new Date () ;
+const targetData = selectedDates[0] ;
+const ms = targetData - currentTime;
 
 
-// flatpickr(test,
-// {
-// enableTime: true,
-// time_24hr: true,
-// defaultDate: new Date(),
-// minuteIncrement: 1,
-// onClose(selectedDates) {
-// console.log(selectedDates[0]);
-// },
-// });
-
-function pad(value) {
-  return String(value).padStart(2, '0');
-}
+convertMs(ms);
 
 function convertMs(ms) {
-  // Number of milliseconds per unit of time
   const second = 1000;
   const minute = second * 60;
   const hour = minute * 60;
   const day = hour * 24;
 
-  // Remaining days
-  const days = pad(Math.floor(ms / day));
-  // Remaining hours
-  const hours = pad(Math.floor((ms % day) / hour));
-  // Remaining minutes
-  const minutes = pad(Math.floor(((ms % day) % hour) / minute));
-  // Remaining seconds
-  const seconds = pad(Math.floor((((ms % day) % hour) % minute) / second));
+  const days = Math.floor(ms / day);
 
-  return { days, hours, minutes, seconds };
-}
+  const hours = Math.floor((ms % day) / hour);
+ 
+  const minutes = Math.floor(((ms % day) % hour) / minute);
+ 
+  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
 
-// console.log(convertMs(2000)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
-// console.log(convertMs(140000)); // {days: 0, hours: 0, minutes: 2, seconds: 20}
-// console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20}
+  //return { days, hours, minutes, seconds };
+  startWithZero()
+refs.startDays.textContent = startWithZero(`${days}`);
+refs.startHours.textContent = startWithZero(`${hours}`);
+refs.startMinutes.textContent = startWithZero(`${minutes}`);
+refs.startSeconds.textContent = startWithZero(`${seconds}`);
+};      
+
+}, 1000));
+
+};
+
+},
+};
+
+flatpickr(refs.input, options);
