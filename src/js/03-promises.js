@@ -2,7 +2,7 @@ const form = document.querySelector('.form');
 form.addEventListener('submit', onFormSubmit);
 
 function createPromise(position, delay) {
-  const promise = new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const shouldResolve = Math.random() > 0.3;
     setTimeout(() => {
       if (shouldResolve) {
